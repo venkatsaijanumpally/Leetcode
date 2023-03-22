@@ -1,0 +1,19 @@
+Heap
+Heap by default orders least element on top
+
+* Comparator
+    compareTo():
+    The semantics of the return values are:
+
+    - A negative value means that the first object was smaller than second object.
+    - The value 0 means the two objects are equal.
+    - A positive value means that the first object was larger than the second object.
+
+    - compareTo(int o1, int o2){ return o1-o2} makes min heap
+    - compareTo(int o1, int o2){ return o2-o1} makes max heap
+
+* Comparable
+    compare(Object o):
+    - An int value: 0 if the string is equal to the other string.
+    - < 0 if the string is lexicographically less than the other string
+    - > 0 if the string is lexicographically greater than the other string (more characters)

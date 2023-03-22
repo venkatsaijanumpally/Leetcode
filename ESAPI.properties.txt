@@ -1,0 +1,2 @@
+ESAPI.Logger=org.owasp.esapi.logging.java.JavaLogFactory
+ESAPI.LogEncodingRequired=false
