@@ -82,11 +82,50 @@ public class PalindromePartitioningII {
         return memoizePalindrome[start][end]= s.charAt(start) == s.charAt(end) && isPalindromeOptimized(s, start + 1, end - 1);
     }
 
+    public int minCut2Tabulative(String s) {
+        int[] memoize = new int[s.length()+1];
+
+        boolean[][] memoizePalindrome = new boolean[s.length() + 1][s.length() + 1];
+
+        int n=s.length();
+        for (int i=1;i<=n;i++) memoizePalindrome[i][i]=true;
+
+        for (int len = 2; len <= n; len++) {
+            for (int i = 1; i<=n-len+1;i++){
+                int j=i+len-1;
+
+                if(s.charAt(i-1)==s.charAt(j-1) && ( len==2 || memoizePalindrome[i+1][j-1] )){
+                    memoizePalindrome[i][j]=true;
+                }
+            }
+        }
+
+
+        memoize[s.length()]=0;
+        for (int i=n-1; i>=0;i--){
+            int min=Integer.MAX_VALUE;
+            for (int j=i;j<n;j++){
+                if (memoizePalindrome[i+1][j+1]){
+                    int cost=1+ memoize[j+1];
+                    min=Math.min(min,cost);
+                }
+            }
+            memoize[i]=min;
+        }
+        return memoize[0]-1;
+    }
+
     public static void main(String[] args) {
         System.out.println(new PalindromePartitioningII().minCut("nitia"));
         System.out.println(new PalindromePartitioningII().minCut("aab"));
         System.out.println(new PalindromePartitioningII().minCut("a"));
         System.out.println(new PalindromePartitioningII().minCut("ab"));
         System.out.println(new PalindromePartitioningII().minCut("abcdef"));
+
+        System.out.println(new PalindromePartitioningII().minCut2Tabulative("nitia"));
+        System.out.println(new PalindromePartitioningII().minCut2Tabulative("aab"));
+        System.out.println(new PalindromePartitioningII().minCut2Tabulative("a"));
+        System.out.println(new PalindromePartitioningII().minCut2Tabulative("ab"));
+        System.out.println(new PalindromePartitioningII().minCut2Tabulative("abcdef"));
     }
 }

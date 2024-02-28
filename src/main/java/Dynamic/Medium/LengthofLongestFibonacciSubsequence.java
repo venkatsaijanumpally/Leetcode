@@ -1,19 +1,27 @@
 package Dynamic.Medium;
 
+import java.util.HashMap;
+
 public class LengthofLongestFibonacciSubsequence {
     public int lenLongestFibSubseq(int[] arr) {
-        /*int[][] memoize=new int[arr.length()+1][text2.length()+1];
-        for(int i=0;i< memoize.length;i++){
-            for (int j=0;j<memoize[0].length;j++){
-                if(i==0 || j==0) memoize[i][j]=0;
-                else {
-                    if(text1.charAt(i-1)==text2.charAt(j-1))
-                        memoize[i][j]=1+memoize[i-1][j-1];
-                    else memoize[i][j]=Math.max(memoize[i][j-1],memoize[i-1][j]);
-                }
+        int[][] t=new int[arr.length][arr.length];
+        HashMap<Integer,Integer> hm=new HashMap<>();
+        int max=2;
+        for (int j=0;j<arr.length;j++){
+            hm.put(arr[j],j);
+            for (int i=0;i<j;i++){
+                int k=hm.getOrDefault(arr[j]-arr[i],-1);
+                t[i][j]=(k>=0 && arr[j]-arr[i]<arr[i])? t[k][i]+1:2;
+                max=Math.max(max,t[i][j]);
             }
         }
-        return memoize[text1.length()][text2.length()];*/
-        return 1;
+        if(max==2)
+            return 0;
+        return max;
+    }
+
+    public static void main(String[] args) {
+        int[] arr1={1,2,3,4,5,6,7,8};
+        System.out.println(new LengthofLongestFibonacciSubsequence().lenLongestFibSubseq(arr1));
     }
 }

@@ -36,24 +36,30 @@ public class MatrixChainMultiplication {
     }
 
     public int TopDown(int[] arr){
-        //TODO
-        /*int[][] memoize=new int[arr.length+1][arr.length+1];
+        /*
+         * Form the memoization matrix size as [arr.length][arr.length] it is easier in this way.
+         */
+        int[][] memoize=new int[arr.length][arr.length];
+        int n= arr.length;
 
-        for(int i=1;i<arr.length;i++){
-            for(int j=arr.length;j>i;j--){
+        for(int Length=2;Length<arr.length;Length++){
+            for(int i=1;i<n-Length+1;i++){
+                int j=i+Length-1;
+                memoize[i][j] = Integer.MAX_VALUE;
                 for(int k=i;k<j;k++){
-
+                    int val = memoize[i][k]+memoize[k+1][j]+ arr[i-1]*arr[k]*arr[j];
+                    memoize[i][j] = Math.min(memoize[i][j], val);
                 }
             }
         }
 
-        return memoize[arr.length][arr.length];*/
-        return 1;
+        return memoize[1][arr.length-1];
     }
 
     public static void main(String[] args) {
         int[] arr={40,20,30,10,30};
         System.out.println(new MatrixChainMultiplication().solve(arr,1,arr.length-1));
         System.out.println(new MatrixChainMultiplication().solveMemoize(arr));
+        System.out.println(new MatrixChainMultiplication().TopDown(arr));
     }
 }
